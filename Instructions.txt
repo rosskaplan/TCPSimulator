@@ -1,0 +1,11 @@
+Please look over this message before the next class so you can ask me questions.
+
+Sorry for the delay, I was trying to develop an api that would work.  Turns out python is a very crappy language for handling bit arrays (to my knowledge), but since I said python before, we're sticking to it.  The api file, pleasetransfer.py, isnt final in any means, but the methods you are allowed to use are, and it still works.  I still need to modify the random noise, drop packet rate, and handling order changes.  The only methods/functions you are not allowed to use from pleasetransfer.py is send and rec.  All the other methods are fair game and pretty much necessary.
+
+I added sender.py and rec.py as example code for sending and receiving.  I'm requiring the input for sendbits to be a binary literal.  
+
+As for project details, I'm going to give you a bunch of binary data, in the order of 10s to 100s of megabytes. Think the easiest form of input data is a file, I'll take suggestions next class. Your job is to run it through my sender and receiver and output the same data on the other side.  Projects will be graded on correctness, total bits transfered, and total time (on a set machine).  
+
+All types of error that the internet sees are fair game, but definitely expect random noise, dropped packets, and order changes at feasible likelihoods.  
+
+-Prof Mevawala
