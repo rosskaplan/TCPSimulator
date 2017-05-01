@@ -37,4 +37,4 @@ Receiver
 *have a timeout to receive the rest
 *If all 5 packets are recieved and are correct, cancel timeout, send ack in one packet for all 5
 *If at least one packet is not received by timeout, send ack for correct packets
-*If all packets are received but at least one is correct, cancel timeout, senc ack for correct packets
+*If all packets are received but at least one is incorrect, cancel timeout, send ack for correct packets
