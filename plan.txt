@@ -1,0 +1,40 @@
+1024 byte packet (might not use full packet)
+
+
+
+
+Consider using byte stuffing (since we just need 2 bytes and a 2 couple of bits)
+
+
+Consider using a VLC for compression
+
+Header contents:
+* MD5 checksum
+* Sequence # (as below)
+	-For 1000MB file size, 2 million packets, assuming 500 bytes per packet.
+	-3 bytes for packet number
+* 
+
+
+
+Strategy:
+
+Sender
+*Send 5 packets in one go
+*Have timeout for ack
+*Switch (ack received) - cancel timeout
+	- All good
+		-- Send next 5
+	- None good
+		-- Resend all 5
+	- Some good
+		-- Resend bad, and send next to fill to 5 packets
+*Ack not received by timeout, resend all 5 packets
+		
+		
+Receiver
+*receive at least one packet
+*have a timeout to receive the rest
+*If all 5 packets are recieved and are correct, cancel timeout, send ack in one packet for all 5
+*If at least one packet is not received by timeout, send ack for correct packets
+*If all packets are received but at least one is incorrect, cancel timeout, send ack for correct packets
