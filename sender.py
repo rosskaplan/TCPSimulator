@@ -13,3 +13,10 @@ while True:
         break
     except socket.timeout:
         pass
+
+# 1. create file
+# 2. write a header function that takes in bits, computes the checksum, and packet number
+# 3. append header with bits of length of your choice
+# 4. send them, receive the bits
+# 5. parse our the header, compare bits to checksum if wrong NAK
+# 6. if NAK, we resend it
