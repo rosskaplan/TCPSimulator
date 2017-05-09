@@ -22,21 +22,26 @@ for i in range(0, (len(all_data)//x)+1):
     new_data.append(all_data[i:i+x]);
     adler = adler32(new_data[i]);
     check.append(str(int(bin(adler)[3:],base=2)));
-    output = str(int(bin(i%128)[2:],base=2)).zfill(2);
+    output = str(bin(int(i%128))[2:]).zfill(8);
     output += check[i];
     output += new_data[i];
     full_data.append(output);
 
 while True:
     try:
-        for i in range(0, (len(full_data)//x)+1):
+        for i in range(0, len(full_data)):
             tosend = "";
             for j in range(0, len(full_data[i])):
-                c = full_data[i][j];
-                tosend += str(bin(int(ord(c)))[2:]).zfill(8);
+                if j < 8:
+                    tosend += full_data[i][j];
+                else: 
+                    c = full_data[i][j];
+                    tosend += str(bin(ord(c))[2:]).zfill(8);
+            print tosend;
             t.sendbits(tosend);
-            ack=t.recbits()
-            print ack;
+            #ack=t.recbits()
+            #print ack;
+        break;
     except socket.timeout:
         pass
 

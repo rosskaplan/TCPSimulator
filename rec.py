@@ -22,8 +22,7 @@ retval = "";
 while True:
 	retval = "";
 	new_data = t.recbits();
-        #print new_data;
-        print new_data[0];
+        print new_data[0:7];
         num = int(new_data[0]);
         print num;
 	if (num == i):

@@ -41,7 +41,7 @@ class pleasetransfer(object):
             return bitstring
 
     def sendbits(self, bits):
-        print self.swap_bool
+        # print self.swap_bool
         # if self.swap_bool==True
         #     self.send(self.swap)
         #     self.swap=None
