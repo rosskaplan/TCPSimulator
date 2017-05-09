@@ -11,7 +11,7 @@ t.send_setup()
 t.rec_setup()
 t.settimeout(1)
 all_data = "".join(sys.stdin)
-x = 1011; #1006 bytes per segment
+x = 1019;
 new_data = [];
 full_data = [];
 check = [];

@@ -26,13 +26,10 @@ while True:
     #print new_data[10:42];
     num = int(new_data[2:10], base = 2);
     if (num == i):
-        output = new_data[10:8162];
+        output = new_data[:8162];
+        print(output);
         check = new_data[8162:];
-        print(len (output));
-        print(len(check));
         new_check = zlib.adler32(output);
-        print(new_check);
-        print(int(check, base=2));
         if (new_check == check):
             #print(output);
             retval = new_data[0];
