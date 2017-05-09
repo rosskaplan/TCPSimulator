@@ -21,7 +21,7 @@ for i in range(0, (len(all_data)//x)+1):
     new_data.append(all_data[i:i+x]);
     m.update(new_data[i]);
     check.append(m.digest());
-    output = str(int(bin(i%65536)[2:],base=2));
+    output = str(int(bin(i%65536)[2:],base=2)).zfill(2);
     output += check[i];
     output += new_data[i];
     full_data.append(output);
@@ -29,9 +29,10 @@ for i in range(0, (len(all_data)//x)+1):
 while True:
     try:
         for i in range(0, (len(all_data)//x)+1):
+            print len(full_data[i]);
+            print full_data[i];
             t.sendbits(bin(full_data[i]));
             ack=t.recbits()
-            print ack
         break
     except socket.timeout:
         pass
