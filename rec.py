@@ -3,28 +3,31 @@ import hashlib
 from hashlib import md5
 import binascii
 import sys
+import zlib
 
 t=pleasetransfer.pleasetransfer(False)#False for receiver
 t.rec_setup()
 t.send_setup()
 # t.settimeout(10)
 
-all_data = "".join(sys.stdout);
 x = 1006;
-m = hashlib.md5()
-new_data = []
-full_data = []
+new_data = "";
 check = "";
-num = "";
-output = ""
+new_check = "";
+num = -1;
+output = "";
 i = 0;
+retval = "";
+
 while True:
-	output = "";):
-	new_data = str(t.recbits())
-	for j in range (0, 1)
-		num.append(new_data[j]
-	num = int(num);
-	if (num == i)
-		for j in range (2, 18)
-			check.append
-		t.sendbits(bin(i))
+	retval = "";
+	new_data = t.recbits();
+	num = ord(new_data[0]);
+	if (num == i):
+		output = new_data[6:];
+		check = new_data[1:5];
+		new_check = zlib.adler32(output);
+		if (new_check == check):
+			print(output);
+			retval = new_data[0];
+			t.sendbits(bin(retval));
