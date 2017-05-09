@@ -28,6 +28,8 @@ while True:
     if (num == i):
         output = new_data[:8162];
         print(output);
+        #print(output);
+        #print(num);
         check = new_data[8162:];
         new_check = zlib.adler32(output);
         if (new_check == check):
