@@ -21,9 +21,8 @@ for i in range(0, (len(all_data)//x)+1):
     adler = "";
     new_data.append(all_data[i:i+x]);
     adler = adler32(new_data[i]);
-    check.append(str(int(bin(adler)[3:],base=2)));
+    check.append(str(bin(adler)[3:]).zfill(32));
     output = str(bin(int(i%256))[2:]).zfill(8);
-    print output
     output += check[i];
     output += new_data[i];
     full_data.append(output);
