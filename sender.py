@@ -20,10 +20,10 @@ for i in range(0, (len(all_data)//x)+1):
     output = "";
     adler = "";
     new_data.append(all_data[i:i+x]);
-    adler = adler32(new_data[i]);
-    check.append(str(bin(adler)[3:]).zfill(32));
+    #adler = adler32(new_data[i]);
+    #check.append(str(bin(adler)[3:]).zfill(32));
     output = str(bin(int(i%256))[2:]).zfill(8);
-    output += check[i];
+    #output += check[i];
     output += new_data[i];
     full_data.append(output);
 
@@ -37,6 +37,8 @@ while True:
                 else: 
                     c = full_data[i][j];
                     tosend += str(bin(ord(c))[2:]).zfill(8);
+            adler = adler32(tosend);
+            tosend += append(str(bin(adler)[3:]).zfill(32));
             #print tosend;
             t.sendbits(tosend);
             #ack=t.recbits()
