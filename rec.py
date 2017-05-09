@@ -20,20 +20,18 @@ i = 0;
 retval = "";
 
 while True:
-    retval = "";
+    retval = "0b";
     new_data = t.recbits();
-    #print new_data[2:10];
-    #print new_data[10:42];
     num = int(new_data[2:10], base = 2);
     if (num == i):
         output = new_data[:8162];
-        print(output);
-        #print(output);
-        #print(num);
         check = new_data[8162:];
-        new_check = zlib.adler32(output);
+        new_check = str(bin(zlib.adler32((output)))[3:]).zfill(32);
+        print(check);
+        print(new_check);
         if (new_check == check):
-            #print(output);
-            retval = new_data[0];
-            t.sendbits(bin(retval));
+            print('true');
+            retval += new_data[2:10];
+            print(retval);
+            t.sendbits(retval);
             i =  i + 1;

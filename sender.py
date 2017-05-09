@@ -36,12 +36,11 @@ while True:
                     tosend += str(bin(ord(c))[2:]).zfill(8);
             print(tosend);
             adler = adler32(tosend);
-            #print adler;
             tosend += str(bin(adler)[3:]).zfill(32);
-            #print tosend;
             t.sendbits(tosend);
-            #ack=t.recbits()
-            #print ack;
+            ack=t.recbits()
+            print ack;
+            sys.exit(1);
         break;
     except socket.timeout:
         pass
