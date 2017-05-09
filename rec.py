@@ -28,7 +28,7 @@ while True:
         print num;
 	if (num == i):
 		output = new_data[6:];
-		check = new_data[1:5];
+		check = new_data[2:4];
                 print check;
 		new_check = zlib.adler32(output);
 		if (new_check == check):

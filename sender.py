@@ -36,7 +36,7 @@ while True:
                 tosend += str(bin(int(ord(c)))[2:]).zfill(8);
             t.sendbits(tosend);
             ack=t.recbits()
-            print ack;
+            print(ack);
         break
     except socket.timeout:
         pass
