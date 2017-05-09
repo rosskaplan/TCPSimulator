@@ -29,19 +29,14 @@ for i in range(0, (len(all_data)//x)+1):
 
 while True:
     try:
-        for i in range(0, (len(all_data)//x)+1):
+        for i in range(0, (len(full_data)//x)+1):
             tosend = "";
-            #print len(full_data[i]);
-            #print full_data[i];
             for j in range(0, len(full_data[i])):
                 c = full_data[i][j];
-                #print ord(c);
-                #print bin(int(ord(c)));
-                #print bin(int(ord(c)))[2:].zfill(8);
                 tosend += str(bin(int(ord(c)))[2:]).zfill(8);
-                #print tosend;
             t.sendbits(tosend);
             ack=t.recbits()
+            print ack;
         break
     except socket.timeout:
         pass
