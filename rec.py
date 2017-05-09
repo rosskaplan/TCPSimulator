@@ -22,15 +22,16 @@ retval = "";
 while True:
 	retval = "";
 	new_data = t.recbits();
-        print new_data[0:7];
+        print new_data[:10];
         num = int(new_data[0]);
-        print num;
+        #print num;
 	if (num == i):
 		output = new_data[6:];
+		#print(output);
 		check = new_data[2:4];
-                print check;
+                #print check;
 		new_check = zlib.adler32(output);
 		if (new_check == check):
-			print(output);
+			#print(output);
 			retval = new_data[0];
 			t.sendbits(bin(retval));
