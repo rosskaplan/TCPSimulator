@@ -2,7 +2,8 @@ import pleasetransfer
 import socket
 import sys
 import hashlib
-from hashlib import md5
+import zlib
+from zlib import adler32
 import binascii
 
 t=pleasetransfer.pleasetransfer(True)#true for sender
@@ -10,17 +11,17 @@ t.send_setup()
 t.rec_setup()
 t.settimeout(1)
 all_data = "".join(sys.stdin)
-x = 1007; #1006 bytes per segment
-m = hashlib.md5();
+x = 1013; #1006 bytes per segment
 new_data = [];
 full_data = [];
 check = [];
 output = "";
 for i in range(0, (len(all_data)//x)+1):
     output = "";
+    adler = "";
     new_data.append(all_data[i:i+x]);
-    m.update(new_data[i]);
-    check.append(m.digest());
+    adler = adler32(new_data[i]);
+    check.append(str(int(bin(adler)[3:],base=2)));
     output = str(int(bin(i%128)[2:],base=2)).zfill(2);
     output += check[i];
     output += new_data[i];
@@ -30,13 +31,16 @@ while True:
     try:
         for i in range(0, (len(all_data)//x)+1):
             tosend = "";
-            print len(full_data[i]);
-            print full_data[i];
+            #print len(full_data[i]);
+            #print full_data[i];
             for j in range(0, len(full_data[i])):
                 c = full_data[i][j];
-                print bin(int(c, base=10));
-                tosend += bin(int(c))[2:];
-            t.sendbits(bin(full_data[i]));
+                #print ord(c);
+                #print bin(int(ord(c)));
+                #print bin(int(ord(c)))[2:].zfill(8);
+                tosend += str(bin(int(ord(c)))[2:]).zfill(8);
+                #print tosend;
+            t.sendbits(tosend);
             ack=t.recbits()
         break
     except socket.timeout:
