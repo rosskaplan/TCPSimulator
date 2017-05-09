@@ -11,7 +11,7 @@ t.send_setup()
 t.rec_setup()
 t.settimeout(1)
 all_data = "".join(sys.stdin)
-x = 1013; #1006 bytes per segment
+x = 1011; #1006 bytes per segment
 new_data = [];
 full_data = [];
 check = [];
@@ -22,7 +22,8 @@ for i in range(0, (len(all_data)//x)+1):
     new_data.append(all_data[i:i+x]);
     adler = adler32(new_data[i]);
     check.append(str(int(bin(adler)[3:],base=2)));
-    output = str(bin(int(i%128))[2:]).zfill(8);
+    output = str(bin(int(i%256))[2:]).zfill(8);
+    print output
     output += check[i];
     output += new_data[i];
     full_data.append(output);
@@ -30,14 +31,14 @@ for i in range(0, (len(all_data)//x)+1):
 while True:
     try:
         for i in range(0, len(full_data)):
-            tosend = "";
+            tosend = "0b";
             for j in range(0, len(full_data[i])):
                 if j < 8:
                     tosend += full_data[i][j];
                 else: 
                     c = full_data[i][j];
                     tosend += str(bin(ord(c))[2:]).zfill(8);
-            print tosend;
+            #print tosend;
             t.sendbits(tosend);
             #ack=t.recbits()
             #print ack;
