@@ -37,7 +37,7 @@ class pleasetransfer(object):
             barray=bytearray(data)
             bitstring = "0b"
             for n in xrange(0,len(barray)):
-                bitstring+=(bin(barray[n])[2:])
+                bitstring+=(bin(barray[n])[2:].zfill(8))
             return bitstring
 
     def sendbits(self, bits):
