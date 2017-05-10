@@ -63,8 +63,9 @@ while True:
                             i = i + windowsize;
                             #print("We will print the last 5 receives here")
                             for k in range (0, 4):
-                                out = "".join((chr(int(output[k][i:i+8], 2)) for i in range(0, len(output[k]), 8)))
+                                out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
                                 sys.stdout.write(out)
+                            output = [];
                             #print(i);
                             retval += str(bin(i)[2:]).zfill(8);
                             flag_main = 1;
