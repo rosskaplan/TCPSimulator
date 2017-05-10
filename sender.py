@@ -19,7 +19,7 @@ check = [];
 output = "";
 for i in range(0, (len(all_data)//x)+1):
     output = "";
-    new_data.append(all_data[i:i+x]);
+    new_data.append(all_data[i*x:i*x+x]);
     output = str(bin(int(i%100))[2:]).zfill(8);
     output += new_data[i];
     full_data.append(output);
