@@ -27,7 +27,9 @@ for i in range(0, (len(all_data)//x)+1):
 retnum = 0;
 while True:
     try:
-        for i in range(0, len(full_data)):
+        i = 0;
+        while i < len(full_data):
+            print("i: " + str(i));
             adler = "";
             tosend = "0b";
             for j in range(0, len(full_data[i])):
@@ -42,12 +44,13 @@ while True:
             if ((i%100) % windowsize == 4):
                 ack=t.recbits();
                 retnum = int(ack[2:10], base=2);
-                print retnum
-                print i;
+                print "ret: " + str(retnum)
+                print "i: " + str(i);
                 if (retnum-1) != (i%100):
                     print "bit errors"
-                    i -= 5;
+                    i -= 4;
                     continue;
+            i += 1;
         break;
     except socket.timeout:
         pass

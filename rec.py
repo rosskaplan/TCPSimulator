@@ -40,11 +40,14 @@ while True:
                     retval += str(bin(i)[2:]).zfill(8);
             else:
                 print('false');
-                retval += (str(bin(i - 1)[2:]).zfill(8));
+                i = i - (j%windowsize) + 1;
+                retval += (str(bin(i)[2:]).zfill(8));
                 break;
         else:
             print('false 2');
             retval += (str(bin(i - 1)[2:]).zfill(8));
+            print "false 2" + str(retval);
+            i = i - (j%windowsize) + 1;
             break;
     print retval;
     t.sendbits(retval);
