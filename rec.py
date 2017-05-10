@@ -64,7 +64,7 @@ while True:
                             #print("We will print the last 5 receives here")
                             for k in range (0, 4):
                                 out = "".join((chr(int(output[k][i:i+8], 2)) for i in range(0, len(output[k]), 8)))
-                                print(out);
+                                sys.stdout.write(out)
                             #print(i);
                             retval += str(bin(i)[2:]).zfill(8);
                             flag_main = 1;
