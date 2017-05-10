@@ -56,7 +56,7 @@ while True:
                     check_output = new_data[:8162];
                     check = new_data[8162:];
                     new_check = str(bin(zlib.adler32((check_output)))[3:]).zfill(32);
-                    output.append("0b" + check_output[10:]);
+                    output.append(check_output[10:]);
                     if (new_check == check):
                         #print('true');
                         if (j == 4):
@@ -65,8 +65,6 @@ while True:
                             for k in range (0, 4):
                                 out = "".join((chr(int(output[k][i:i+8], 2)) for i in range(0, len(output[k]), 8)))
                                 print(out);
-                                sys.stdout.write(output[k])
-                                #print output[k],#(binascii.unhexlify('%x' % output[k])),
                             #print(i);
                             retval += str(bin(i)[2:]).zfill(8);
                             flag_main = 1;
