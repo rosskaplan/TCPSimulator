@@ -29,7 +29,7 @@ while True:
     try:
         i = 0;
         while i < len(full_data):
-            print("i: " + str(i));
+            print("itop: " + str(i));
             adler = "";
             tosend = "0b";
             for j in range(0, len(full_data[i])):

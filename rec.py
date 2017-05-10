@@ -27,6 +27,7 @@ while True:
     for j in range (0, windowsize):
         new_data = t.recbits();
         num = int(new_data[2:10], base = 2);
+        print "num: " + str(num) + ';' + " i: " + str(i) + ';' + " j: " + str(j);
         if (num == i + j):
             output = new_data[:8162];
             check = new_data[8162:];
