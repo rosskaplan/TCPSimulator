@@ -17,10 +17,11 @@ new_data = "";
 check = "";
 new_check = "";
 num = -1;
-output = "";
+check_output = "";
 i = 0;
 retval = "";
 flag_main = 0;
+output = [];
 
 while True:
     retval = "0b";
@@ -36,7 +37,7 @@ while True:
             try:
                 new_data = t.recbits();
             except socket.timeout:
-                print("socket timeout");
+                #print("socket timeout");
                 flag = 2;
                 break;
             if (new_data != ""):
@@ -49,35 +50,38 @@ while True:
         if (flag == 1):
             if (flag_main == 0):
                 num = int(new_data[2:10], base = 2);
-                print "num: " + str(num) + ';' + " i: " + str(i) + ';' + " j: " + str(j);
+                #print "num: " + str(num) + ';' + " i: " + str(i) + ';' + " j: " + str(j);
                 if (num == i + j):
-                    output = new_data[:8162];
+                    check_output = new_data[:8162];
                     check = new_data[8162:];
-                    new_check = str(bin(zlib.adler32((output)))[3:]).zfill(32);
+                    new_check = str(bin(zlib.adler32((check_output)))[3:]).zfill(32);
+                    output.append("0b" + check_output[10:]);
                     if (new_check == check):
-                        print('true');
+                        #print('true');
                         if (j == 4):
                             i = i + windowsize;
-                            print("We will print the last 5 receives here")
-                            print(i);
+                            #print("We will print the last 5 receives here")
+                            for k in range (0, 4):
+                                print output[k],#(binascii.unhexlify('%x' % output[k])),
+                            #print(i);
                             retval += str(bin(i)[2:]).zfill(8);
                             flag_main = 1;
                     else:
-                        print('false');
+                        #print('false');
                         retval += (str(bin(i)[2:]).zfill(8));
                         flag_main = 2;
                 else:
-                    print('false 2');
+                    #print('false 2');
                     retval += (str(bin(i)[2:]).zfill(8));
-                    print "false 2" + str(retval);
+                    #print "false 2" + str(retval);
                     flag_main = 2;
         elif (flag == 2):
-            print('no rec');
+            #print('no rec');
             retval += (str(bin(i)[2:]).zfill(8));
-            print "no rec: " + str(retval);
+            #print "no rec: " + str(retval);
             flag_main = 2;
             break;
 
-    print "retval: " + retval;
+    #print "retval: " + retval;
     if flag != 2:
         t.sendbits(retval);

@@ -43,7 +43,6 @@ while True:
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);
             if ((i%100) % windowsize == 4):
-                print("ending 5 sequence")
                 counter = 0;
                 flag = 0;
                 ack = "";

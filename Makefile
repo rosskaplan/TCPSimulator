@@ -1,5 +1,5 @@
 receiver:
-	python rec.py
+	python rec.py > out1.txt
 
 sender: 
 	cat inputfile.txt | python sender.py
