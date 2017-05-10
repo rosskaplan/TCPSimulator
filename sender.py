@@ -12,6 +12,7 @@ t.rec_setup()
 t.settimeout(1)
 all_data = "".join(sys.stdin)
 x = 1019;
+windowsize = 5;
 new_data = [];
 full_data = [];
 check = [];
@@ -23,6 +24,7 @@ for i in range(0, (len(all_data)//x)+1):
     output += new_data[i];
     full_data.append(output);
 
+retnum = 0;
 while True:
     try:
         for i in range(0, len(full_data)):
@@ -34,14 +36,16 @@ while True:
                 else: 
                     c = full_data[i][j];
                     tosend += str(bin(ord(c))[2:]).zfill(8);
-            print(tosend);
             adler = adler32(tosend);
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);
-            ack=t.recbits()
-            print ack;
-            sys.exit(1);
-        break;
+            if (i % windowsize == 4):
+                ack=t.recbits();
+                retnum = int(ack[2:10], base=2);
+                if retnum != i:
+                    print "bit errors"
+                    i -= 5;
+                    continue;
     except socket.timeout:
         pass
 
