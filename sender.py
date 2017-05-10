@@ -46,6 +46,7 @@ while True:
                     print "bit errors"
                     i -= 5;
                     continue;
+                sys.exit(1);
     except socket.timeout:
         pass
 

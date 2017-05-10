@@ -32,6 +32,9 @@ while True:
             new_check = str(bin(zlib.adler32((output)))[3:]).zfill(32);
             if (new_check == check):
                 print('true');
+                if (j == 4):
+                    i = i + windowsize;
+                    print("We will print the last 5 receives here")
             else:
                 print('false');
                 retval += (str(bin(i - 1)[3:]).zfill(8));
@@ -42,4 +45,3 @@ while True:
             retval += (str(bin(i - 1)[3:]).zfill(8));
             print (retval);
             break;
-    i = i + windowsize;
