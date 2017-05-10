@@ -28,9 +28,9 @@ retnum = 0;
 while True:
     try:
         i = 0;
-        print(len(full_data));
+        #print(len(full_data));
         while i < len(full_data):
-            print("itop: " + str(i));
+            #print("itop: " + str(i));
             adler = "";
             tosend = "0b";
             for j in range(0, len(full_data[i])):
@@ -51,7 +51,7 @@ while True:
                     try:
                         ack=t.recbits();
                     except socket.timeout:
-                        print("socket timeout");
+                        #print("socket timeout");
                         flag = 2;
                         break;
                     if ack != "":
@@ -59,22 +59,22 @@ while True:
                         break;
                     if counter > 1000: 
                         flag = 2;
-                        print("timeout 0");
+                        #print("timeout 0");
                         break;
                 if flag == 1: 
                     retnum = int(ack[2:10], base=2);
-                    print "ret: " + str(retnum)
-                    print "i: " + str(i);
+                    #print "ret: " + str(retnum)
+                    #print "i: " + str(i);
                     if (retnum-1) != (i%100):
-                        print "bit errors"
+                        #print "bit errors"
                         i -= 4;
                         continue;
                 elif flag == 2:
-                    print "timeout"
+                    #print "timeout"
                     i -= 4;
                     continue;
             i += 1;
         break;
     except socket.timeout:
-        print("exception");
+        #print("exception");
         pass
