@@ -11,7 +11,7 @@ t.send_setup()
 # t.settimeout(10)
 
 windowsize = 5;
-x = 1006;
+x = 1019;
 new_data = "";
 check = "";
 new_check = "";
@@ -22,7 +22,8 @@ retval = "";
 
 while True:
     retval = "0b";
-
+    
+    i = i % 100;
     for j in range (0, windowsize):
         new_data = t.recbits();
         num = int(new_data[2:10], base = 2);
@@ -36,12 +37,14 @@ while True:
                     i = i + windowsize;
                     print("We will print the last 5 receives here")
                     print(i);
+                    retval += str(bin(i)[2:]).zfill(8);
             else:
                 print('false');
-                retval += (str(bin(i - 1)[3:]).zfill(8));
+                retval += (str(bin(i - 1)[2:]).zfill(8));
                 break;
         else:
             print('false 2');
-            retval += (str(bin(i - 1)[3:]).zfill(8));
+            retval += (str(bin(i - 1)[2:]).zfill(8));
             break;
+    print retval;
     t.sendbits(retval);
