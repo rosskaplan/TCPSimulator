@@ -42,12 +42,28 @@ while True:
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);
             if ((i%100) % windowsize == 4):
-                ack=t.recbits();
-                retnum = int(ack[2:10], base=2);
-                print "ret: " + str(retnum)
-                print "i: " + str(i);
-                if (retnum-1) != (i%100):
-                    print "bit errors"
+                counter = 0;
+                flag = 0;
+                ack = "";
+                while True:
+                    counter += 1;
+                    ack=t.recbits();
+                    if ack != "":
+                        flag = 1;
+                        break;
+                    if counter > 10000: 
+                        flag = 2;
+                        break;
+                if flag = 1: 
+                    retnum = int(ack[2:10], base=2);
+                    print "ret: " + str(retnum)
+                    print "i: " + str(i);
+                    if (retnum-1) != (i%100):
+                        print "bit errors"
+                        i -= 4;
+                        continue;
+                elif flag = 2:
+                    print "timeout"
                     i -= 4;
                     continue;
             i += 1;
