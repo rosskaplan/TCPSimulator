@@ -65,6 +65,7 @@ while True:
                             for k in range (0, 4):
                                 out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
                                 sys.stdout.write(out)
+                                sys.stdout.write(output[k])
                             output = [];
                             #print(i);
                             retval += str(bin(i)[2:]).zfill(8);
