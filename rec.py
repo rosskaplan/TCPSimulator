@@ -35,13 +35,13 @@ while True:
                 if (j == 4):
                     i = i + windowsize;
                     print("We will print the last 5 receives here")
+                    print(i);
             else:
                 print('false');
                 retval += (str(bin(i - 1)[3:]).zfill(8));
-                print (retval);
                 break;
         else:
             print('false 2');
             retval += (str(bin(i - 1)[3:]).zfill(8));
-            print (retval);
             break;
+    t.sendbits(retval);
