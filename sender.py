@@ -28,6 +28,7 @@ retnum = 0;
 while True:
     try:
         i = 0;
+        print(len(full_data));
         while i < len(full_data):
             print("itop: " + str(i));
             adler = "";
@@ -42,19 +43,26 @@ while True:
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);
             if ((i%100) % windowsize == 4):
+                print("ending 5 sequence")
                 counter = 0;
                 flag = 0;
                 ack = "";
                 while True:
                     counter += 1;
-                    ack=t.recbits();
+                    try:
+                        ack=t.recbits();
+                    except socket.timeout:
+                        print("socket timeout");
+                        flag = 2;
+                        break;
                     if ack != "":
                         flag = 1;
                         break;
-                    if counter > 10000: 
+                    if counter > 1000: 
                         flag = 2;
+                        print("timeout 0");
                         break;
-                if flag = 1: 
+                if flag == 1: 
                     retnum = int(ack[2:10], base=2);
                     print "ret: " + str(retnum)
                     print "i: " + str(i);
@@ -62,11 +70,12 @@ while True:
                         print "bit errors"
                         i -= 4;
                         continue;
-                elif flag = 2:
+                elif flag == 2:
                     print "timeout"
                     i -= 4;
                     continue;
             i += 1;
         break;
     except socket.timeout:
+        print("exception");
         pass
