@@ -10,6 +10,7 @@ t.rec_setup()
 t.send_setup()
 # t.settimeout(10)
 
+windowsize = 5;
 x = 1006;
 new_data = "";
 check = "";
@@ -21,17 +22,24 @@ retval = "";
 
 while True:
     retval = "0b";
-    new_data = t.recbits();
-    num = int(new_data[2:10], base = 2);
-    if (num == i):
-        output = new_data[:8162];
-        check = new_data[8162:];
-        new_check = str(bin(zlib.adler32((output)))[3:]).zfill(32);
-        print(check);
-        print(new_check);
-        if (new_check == check):
-            print('true');
-            retval += new_data[2:10];
-            print(retval);
-            t.sendbits(retval);
-            i =  i + 1;
+
+    for j in range (0, windowsize):
+        new_data = t.recbits();
+        num = int(new_data[2:10], base = 2);
+        if (num == i + j):
+            output = new_data[:8162];
+            check = new_data[8162:];
+            new_check = str(bin(zlib.adler32((output)))[3:]).zfill(32);
+            if (new_check == check):
+                print('true');
+            else:
+                print('false');
+                retval += (str(bin(i - 1)[3:]).zfill(8));
+                print (retval);
+                break;
+        else:
+            print('false 2');
+            retval += (str(bin(i - 1)[3:]).zfill(8));
+            print (retval);
+            break;
+    i = i + windowsize;

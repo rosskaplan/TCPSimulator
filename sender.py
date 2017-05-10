@@ -40,7 +40,6 @@ while True:
             t.sendbits(tosend);
             ack=t.recbits()
             print ack;
-            sys.exit(1);
         break;
     except socket.timeout:
         pass
