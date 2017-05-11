@@ -7,7 +7,7 @@ from binascii import b2a_uu
 import sys
 import zlib
 
-t=pleasetransfer.pleasetransfer(False)#False for receiver
+t=pleasetransfer.pleasetransfer(False)
 t.rec_setup()
 t.send_setup()
 t.settimeout(0.01)
@@ -38,7 +38,6 @@ while True:
             try:
                 new_data = t.recbits();
             except socket.timeout:
-                #print("socket timeout");
                 flag = 2;
                 break;
             if (new_data != ""):
@@ -53,47 +52,43 @@ while True:
                 num = int(new_data[2:10], base = 2);
                 if (num == i + j):
                     if (len(new_data) < 8192):
-                        check_output = new_data[:len(new_data) - 31];
-                        check = new_data[len(new_data) - 31:];
+                        check_output = new_data[:len(new_data) - 32];
+                        check = new_data[len(new_data) - 32:];
+                        sys.stderr.write(check + "\n");
                     else:
                         check_output = new_data[:8162];
                         check = new_data[8162:];
                     new_check = str(bin(zlib.adler32((check_output)))[3:]).zfill(32);
                     output.append(check_output[10:]);
                     if (new_check == check):
-                        #print('true');
+                        if (len(new_data) < 8192):
+                            sys.stderr.write("working\n");
+                            for k in range (0, j + 1):
+                                out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
+                                sys.stdout.write(out);
+                            sys.exit(0);
                         if (j == windowsize - 1):
                             i = i + windowsize;
-                            #print("We will print the last 5 receives here")
                             for k in range (0, windowsize):
                                 out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
-                                print(out);
+                                sys.stdout.write(out);
                                 allzeros = '00110000'*(len(output[k])/8);
-                                #if (output[k] != allzeros):
-                                #    sys.stdout.write(out)
                             output = [];
-                            #print(i);
                             retval += str(bin(i)[2:]).zfill(8);
                             flag_main = 1;
                     else:
-                        #print('false');
                         retval += (str(bin(i)[2:]).zfill(8));
                         flag_main = 2;
                         output = [];
                 else:
-                    #print('false 2');
                     retval += (str(bin(i)[2:]).zfill(8));
-                    #print "false 2" + str(retval);
                     flag_main = 2;
                     output = [];
         elif (flag == 2):
-            #print('no rec');
             retval += (str(bin(i)[2:]).zfill(8));
-            #print "no rec: " + str(retval);
             flag_main = 2;
             output = [];
             break;
 
-    #print "retval: " + retval;
     if flag != 2:
         t.sendbits(retval);
