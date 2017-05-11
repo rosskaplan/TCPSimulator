@@ -52,8 +52,8 @@ while True:
             adler = adler32(tosend);
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);
-            if(len(full_data[i]) < len(full_data[0])):
-                exit(0);
+            #if(len(full_data[i]) < len(full_data[0])):
+            #    exit(0);
             if ((i%100) % windowsize == (windowsize - 1)):
                 counter = 0;
                 flag = 0;

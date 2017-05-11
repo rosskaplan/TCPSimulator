@@ -55,9 +55,9 @@ while True:
                     if (len(new_data) < 8192):
                         check_output = new_data[:len(new_data) - 31];
                         check = new_data[len(new_data) - 31:];
-                        exit(0);
-                    check_output = new_data[:8162];
-                    check = new_data[8162:];
+                    else:
+                        check_output = new_data[:8162];
+                        check = new_data[8162:];
                     new_check = str(bin(zlib.adler32((check_output)))[3:]).zfill(32);
                     output.append(check_output[10:]);
                     if (new_check == check):
@@ -67,9 +67,10 @@ while True:
                             #print("We will print the last 5 receives here")
                             for k in range (0, windowsize):
                                 out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
+                                print(out);
                                 allzeros = '0'*len(output[k]);
-                                if (output[k] != allzeros):
-                                    sys.stdout.write(out)
+                                #if (output[k] != allzeros):
+                                #    sys.stdout.write(out)
                             output = [];
                             #print(i);
                             retval += str(bin(i)[2:]).zfill(8);
