@@ -10,9 +10,9 @@ import zlib
 t=pleasetransfer.pleasetransfer(False)#False for receiver
 t.rec_setup()
 t.send_setup()
-t.settimeout(0.1)
+t.settimeout(0.01)
 
-windowsize = 1;
+windowsize = 5;
 x = 1019;
 new_data = "";
 check = "";
@@ -52,6 +52,10 @@ while True:
             if (flag_main == 0):
                 num = int(new_data[2:10], base = 2);
                 if (num == i + j):
+                    if (len(new_data) < 8192):
+                        check_output = new_data[:len(new_data) - 31];
+                        check = new_data[len(new_data) - 31:];
+                        exit(0);
                     check_output = new_data[:8162];
                     check = new_data[8162:];
                     new_check = str(bin(zlib.adler32((check_output)))[3:]).zfill(32);

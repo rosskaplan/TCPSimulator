@@ -10,14 +10,19 @@ import time
 t=pleasetransfer.pleasetransfer(True)#true for sender
 t.send_setup()
 t.rec_setup()
-t.settimeout(0.1)
+t.settimeout(0.01)
 all_data = "".join(sys.stdin)
 x = 1019;
-windowsize = 1;
+windowsize = 5;
 new_data = [];
 full_data = [];
 check = [];
 output = "";
+
+
+start_time = time.time();start_time = time.time();
+
+
 for i in range(0, (len(all_data)//x)+1):
     output = "";
     new_data.append(all_data[i*x:i*x+x]);
@@ -26,13 +31,11 @@ for i in range(0, (len(all_data)//x)+1):
     full_data.append(output);
 
 retnum = 0;
-start_time = time.time();
 
 
 while True:
     try:
         i = 0;
-        #print(len(full_data));
         while i < len(full_data):
             if (len(full_data[i]) < len(full_data[0])):
                 print ("--- %s seconds ---" % (time.time() - start_time));
@@ -47,6 +50,8 @@ while True:
             adler = adler32(tosend);
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);
+            if(len(full_data[i]) < len(full_data[0])):
+                exit(0);
             if ((i%100) % windowsize == (windowsize - 1)):
                 counter = 0;
                 flag = 0;
