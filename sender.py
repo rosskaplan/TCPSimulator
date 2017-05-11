@@ -49,6 +49,7 @@ while True:
                 else: 
                     c = full_data[i][j];
                     tosend += str(bin(ord(c))[2:]).zfill(8);
+            print(tosend);
             adler = adler32(tosend);
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);

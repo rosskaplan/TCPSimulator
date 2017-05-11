@@ -68,7 +68,7 @@ while True:
                             for k in range (0, windowsize):
                                 out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
                                 print(out);
-                                allzeros = '0'*len(output[k]);
+                                allzeros = '00110000'*(len(output[k])/8);
                                 #if (output[k] != allzeros):
                                 #    sys.stdout.write(out)
                             output = [];
