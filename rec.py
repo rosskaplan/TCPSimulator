@@ -67,7 +67,9 @@ while True:
                             #print("We will print the last 5 receives here")
                             for k in range (0, windowsize):
                                 out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
-                                sys.stdout.write(out)
+                                allzeros = '0'*x;
+                                if (output[k] != allzeros):
+                                    sys.stdout.write(out)
                             output = [];
                             #print(i);
                             retval += str(bin(i)[2:]).zfill(8);

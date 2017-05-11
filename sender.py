@@ -30,6 +30,11 @@ for i in range(0, (len(all_data)//x)+1):
     output += new_data[i];
     full_data.append(output);
 
+while (len(full_data) % windowsize != 0): #create EOF packets at multiple of window size
+    output = str(bin(int(len(full_data)%100))[2:]).zfill(8);
+    output += '0'*x;
+    full_data.append(output);
+
 retnum = 0;
 
 
