@@ -19,9 +19,7 @@ full_data = [];
 check = [];
 output = "";
 
-
-start_time = time.time();start_time = time.time();
-
+start_time = time.time();
 
 for i in range(0, (len(all_data)//x)+1):
     output = "";
@@ -36,7 +34,6 @@ while (len(full_data) % windowsize != 0): #create EOF packets at multiple of win
     full_data.append(output);
 
 retnum = 0;
-
 
 while True:
     try:
