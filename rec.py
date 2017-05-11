@@ -10,9 +10,9 @@ import zlib
 t=pleasetransfer.pleasetransfer(False)#False for receiver
 t.rec_setup()
 t.send_setup()
-t.settimeout(1)
+t.settimeout(0.1)
 
-windowsize = 5;
+windowsize = 1;
 x = 1019;
 new_data = "";
 check = "";
@@ -51,7 +51,6 @@ while True:
         if (flag == 1):
             if (flag_main == 0):
                 num = int(new_data[2:10], base = 2);
-                #print "num: " + str(num) + ';' + " i: " + str(i) + ';' + " j: " + str(j);
                 if (num == i + j):
                     check_output = new_data[:8162];
                     check = new_data[8162:];
@@ -59,10 +58,10 @@ while True:
                     output.append(check_output[10:]);
                     if (new_check == check):
                         #print('true');
-                        if (j == 4):
+                        if (j == windowsize - 1):
                             i = i + windowsize;
                             #print("We will print the last 5 receives here")
-                            for k in range (0, 4):
+                            for k in range (0, windowsize):
                                 out = "".join((chr(int(output[k][loop:loop+8], 2)) for loop in range(0, len(output[k]), 8)))
                                 sys.stdout.write(out)
                             output = [];

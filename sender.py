@@ -5,14 +5,15 @@ import hashlib
 import zlib
 from zlib import adler32
 import binascii
+import time
 
 t=pleasetransfer.pleasetransfer(True)#true for sender
 t.send_setup()
 t.rec_setup()
-t.settimeout(1)
+t.settimeout(0.1)
 all_data = "".join(sys.stdin)
 x = 1019;
-windowsize = 5;
+windowsize = 1;
 new_data = [];
 full_data = [];
 check = [];
@@ -25,12 +26,16 @@ for i in range(0, (len(all_data)//x)+1):
     full_data.append(output);
 
 retnum = 0;
+start_time = time.time();
+
+
 while True:
     try:
         i = 0;
         #print(len(full_data));
         while i < len(full_data):
-            #print("itop: " + str(i));
+            if (len(full_data[i]) < len(full_data[0])):
+                print ("--- %s seconds ---" % (time.time() - start_time));
             adler = "";
             tosend = "0b";
             for j in range(0, len(full_data[i])):
@@ -42,7 +47,7 @@ while True:
             adler = adler32(tosend);
             tosend += str(bin(adler)[3:]).zfill(32);
             t.sendbits(tosend);
-            if ((i%100) % windowsize == 4):
+            if ((i%100) % windowsize == (windowsize - 1)):
                 counter = 0;
                 flag = 0;
                 ack = "";
@@ -63,15 +68,13 @@ while True:
                         break;
                 if flag == 1: 
                     retnum = int(ack[2:10], base=2);
-                    #print "ret: " + str(retnum)
-                    #print "i: " + str(i);
                     if (retnum-1) != (i%100):
-                        #print "bit errors"
-                        i -= 4;
-                        continue;
+							if (retnum + 99) != (i%100):
+								i -= (windowsize - 1);
+								continue;
                 elif flag == 2:
                     #print "timeout"
-                    i -= 4;
+                    i -= (windowsize - 1);
                     continue;
             i += 1;
         break;
