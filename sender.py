@@ -74,9 +74,9 @@ while True:
                 if flag == 1: 
                     retnum = int(ack[2:10], base=2);
                     if (retnum-1) != (i%100):
-							if (retnum + 99) != (i%100):
-								i -= (windowsize - 1);
-								continue;
+                        if (retnum + 99) != (i%100):
+                            i -= (windowsize - 1);
+                            continue;
                 elif flag == 2:
                     #print "timeout"
                     i -= (windowsize - 1);
